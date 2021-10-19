@@ -1,0 +1,22 @@
+{
+  "name": "stocktaker",
+  "version": "1.0.0",
+  "description": "An inventory manager connected to your Database",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "shop",
+    "inventory"
+  ],
+  "author": "Riccardo Zunino",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^15.2.0"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "nconf": "^0.11.3"
+  }
+}
