@@ -1,6 +1,7 @@
 // main.js
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+
 const path = require('path')
 let mainWindow
 function createWindow () {
@@ -53,3 +54,21 @@ ipcMain.on('connected', (event, data) =>
     mainWindow.loadFile("pages/home.html")
   }
 )
+
+ipcMain.on("remove", (event, data) => {
+  let options  = {
+    buttons: ["Yes","No"],
+    message: "Are you sure you want to remove product #" + data + "?"
+}
+  let response = dialog.showMessageBoxSync(options)
+  console.log(response)
+  if(response == 0)
+  {
+    mainWindow.webContents.send("remove_from_db", data)
+  }
+})
+
+ipcMain.on("refresh", (event, data) => {
+  mainWindow.reload();
+
+})

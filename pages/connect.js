@@ -24,47 +24,49 @@ button.addEventListener('click', () => {
         if (err) {
             alert("Error! Cannot connect to database! " + err)
             throw err;
-        }            
-      });
-      let toBeCreated
-      con.query("SHOW TABLES LIKE 'products';", (error, results, fields) => {
-          if(results.length >= 1)
-          {
-              toBeCreated = 0
-          }else
-          {
-              toBeCreated = 1
-              
-          }
-      })
-
-      if(toBeCreated == 1){
-        con.query("CREATE TABLE products (product_id INT, name TEXT, quantity INT, description TEXT, price FLOAT)", (err, res) => {
-            if (err) {
-                alert("Error while creating the table " + err)
-                throw err
+        }else{
+            let toBeCreated
+            con.query("SHOW TABLES LIKE 'products';", (error, results, fields) => {
+                if(results.length >= 1)
+                {
+                    toBeCreated = 0
+                }else
+                {
+                    toBeCreated = 1
+                    
+                }
+            })
+      
+            if(toBeCreated == 1){
+              con.query("CREATE TABLE products (product_id INT, name TEXT, quantity INT, description TEXT, price FLOAT)", (err, res) => {
+                  if (err) {
+                      alert("Error while creating the table " + err)
+                      throw err
+                  }
+              })
+            }else
+            {
+              alert("Table Products already exists. It won't be created again")
             }
-        })
-      }else
-      {
-        alert("Table Products already exists. It won't be created again")
-      }
-
-    nconf.use('file', { file: './config.json' });
-    nconf.load()
-    nconf.set('host', host)
-    nconf.set('user', username)
-    nconf.set('password', password)
-    nconf.set('database', name)
-    
-    nconf.save((err) => {
-        if(err)
-        {
-            alert("Error while saving your file " + err.message)
-            return
+      
+          nconf.use('file', { file: './config.json' });
+          nconf.load()
+          nconf.set('host', host)
+          nconf.set('user', username)
+          nconf.set('password', password)
+          nconf.set('database', name)
+          
+          nconf.save((err) => {
+              if(err)
+              {
+                  alert("Error while saving your file " + err.message)
+                  return
+              }
+              alert("Database data saved successfully");
+          })
+      
+          ipcRenderer.send("connected", "")
         }
-        alert("Database data saved successfully");
-    })
-
-    ipcRenderer.send("connected", "")
+      });
+      
 })
