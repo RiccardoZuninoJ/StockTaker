@@ -63,21 +63,36 @@
                 id.scope = "row"
                 let productName = document.createElement('td')
                 productName.appendChild(document.createTextNode(element.name))
+
                 let productPrice = document.createElement('td')
-                productPrice.appendChild(document.createTextNode(element.price))
+                let divP = document.createElement('div')
+                divP.setAttribute('class', 'input-group')
+                let prodP = document.createElement('input')
+                prodP.setAttribute('class', 'form-control')
+                prodP.setAttribute('type', 'number')
+                prodP.setAttribute("id", "pri" + element.product_id)
+                prodP.value = element.price
+                divP.appendChild(prodP)
+                let buttonPr = document.createElement("button")
+                buttonPr.setAttribute("class", "btn btn-success input-group-text")
+                buttonPr.appendChild(document.createTextNode("Save"))
+                buttonPr.setAttribute("onclick", "save_price("+element.product_id+")")
+                divP.appendChild(buttonPr)
+                productPrice.appendChild(divP)
+
                 let productQty = document.createElement('td')
                 let div = document.createElement('div')
-
                 div.setAttribute("class", "input-group")
                 let qty = document.createElement('input')
-                
                 qty.value = element.quantity
                 qty.setAttribute('class', 'form-control')
                 qty.setAttribute('type', 'number')
+                qty.setAttribute("id", "qty" + element.product_id)
                 div.appendChild(qty)
                 let button = document.createElement("button")
                 button.setAttribute("class", "btn btn-success input-group-text")
                 button.appendChild(document.createTextNode("Save"))
+                button.setAttribute("onclick", "save_quantity("+element.product_id+")")
                 div.appendChild(button)
                 productQty.appendChild(div)
                 let productDescription = document.createElement('td')

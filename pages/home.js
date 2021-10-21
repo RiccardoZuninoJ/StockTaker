@@ -1,36 +1,73 @@
 const { ipcRenderer } = require('electron')
 
 let button = document.getElementById('add')
-button.addEventListener('click', () => {
-    let name = document.createElement('input')
-    name.setAttribute("class", "form-control mb-2")
-    name.setAttribute("placeholder", "Product name")
-    name.setAttribute("id", "productName")
-    name.setAttribute("type", "text")
-    let description = document.createElement('textarea')
-    description.setAttribute("class", "form-control mb-2")
-    description.setAttribute("placeholder", "Product description")
-    description.setAttribute("id", "productDescription")
-    description.setAttribute("type", "text")
-    let quantity = document.createElement('input')
-    quantity.setAttribute("class", "form-control mb-2")
-    quantity.setAttribute("id", "productQuantity")
-    quantity.setAttribute("placeholder", "Quantity")
-    quantity.setAttribute("type", "number")
-    let price = document.createElement('input')
-    price.setAttribute("class", "form-control mb-2")
-    price.setAttribute("id", "productPrice")
-    price.setAttribute("placeholder", "Price")
-    price.setAttribute("type", "number")
-    let button = document.createElement('button')
-    button.setAttribute('class', 'btn btn-light')
-    button.appendChild(document.createTextNode("Add this product"))
-    button.setAttribute('onclick', "insert()")
-    let div = document.createElement('div')
-    div.append(name, description, quantity, price, button)
-    document.getElementById("addProducts").appendChild(div)
-})
+let opened = 0
 
+button.addEventListener('click', () => {
+    if(opened == 0)
+    {
+        let name = document.createElement('input')
+        name.setAttribute("class", "form-control mb-2")
+        name.setAttribute("placeholder", "Product name")
+        name.setAttribute("id", "productName")
+        name.setAttribute("type", "text")
+        let description = document.createElement('textarea')
+        description.setAttribute("class", "form-control mb-2")
+        description.setAttribute("placeholder", "Product description")
+        description.setAttribute("id", "productDescription")
+        description.setAttribute("type", "text")
+        let quantity = document.createElement('input')
+        quantity.setAttribute("class", "form-control mb-2")
+        quantity.setAttribute("id", "productQuantity")
+        quantity.setAttribute("placeholder", "Quantity")
+        quantity.setAttribute("type", "number")
+        let price = document.createElement('input')
+        price.setAttribute("class", "form-control mb-2")
+        price.setAttribute("id", "productPrice")
+        price.setAttribute("placeholder", "Price")
+        price.setAttribute("type", "number")
+        let button = document.createElement('button')
+        button.setAttribute('class', 'btn btn-light')
+        button.appendChild(document.createTextNode("Add this product"))
+        button.setAttribute('onclick', "insert()")
+        let div = document.createElement('div')
+        div.append(name, description, quantity, price, button)
+        document.getElementById("addProducts").appendChild(div)
+        opened = 1
+    }else
+    {
+        let div = document.getElementById('addProducts')
+        div.removeChild(div.lastElementChild)
+        opened = 0
+
+    }
+})
+function save_quantity(id)
+{
+    let qty = document.getElementById('qty'+id).value
+    con.query("UPDATE products SET quantity=" + qty + " WHERE product_id=" + id, (error, results, fields) => {
+        if(error)
+        {
+            alert(error)
+        }else
+        {
+            ipcRenderer.send("refresh")
+        }
+    })
+}
+function save_price(id)
+{
+    let qty = document.getElementById('pri'+id).value
+    con.query("UPDATE products SET price=" + qty + " WHERE product_id=" + id, (error, results, fields) => {
+        if(error)
+        {
+            alert(error)
+        }else
+        {
+            ipcRenderer.send("refresh")
+        }
+    })
+}
 function insert()
 {
     let name = document.getElementById('productName').value
