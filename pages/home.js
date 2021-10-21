@@ -3,6 +3,15 @@ const { ipcRenderer } = require('electron')
 let button = document.getElementById('add')
 let opened = 0
 
+let goback = document.getElementById('goback')
+goback.addEventListener('click', () => {
+    ipcRenderer.send("goto", "index.html")
+})
+
+document.getElementById('opengithub').addEventListener("click", () => 
+    ipcRenderer.send("openlink", "https://github.com/RiccardoZuninoJ")
+)
+
 button.addEventListener('click', () => {
     if(opened == 0)
     {

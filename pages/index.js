@@ -3,6 +3,9 @@ let buttonPrev = document.getElementById('connectPrev')
 
 const { ipcRenderer } = require('electron')
 
+document.getElementById('opengithub').addEventListener("click", () => 
+    ipcRenderer.send("openlink", "https://github.com/RiccardoZuninoJ")
+)
 
 button.addEventListener('click', () => {
     ipcRenderer.send("connect", 'db');
@@ -27,7 +30,7 @@ buttonPrev.addEventListener('click', () => {
         }else
         {
             alert("Connected successfully to the Database")
-            ipcRenderer.send("connected", "first")
+            ipcRenderer.send("goto", "home.html")
         }           
       });
 })

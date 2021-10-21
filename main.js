@@ -1,9 +1,39 @@
 // main.js
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
-
+const { app, BrowserWindow, ipcMain, dialog, shell, Menu } = require('electron')
 const path = require('path')
 let mainWindow
+
+const template = [
+  {
+    label: 'DB',
+    submenu: [
+      {
+        label: 'Change Database'
+      }
+    ]
+  },
+  {
+    label: 'Info',
+    submenu: [
+      {
+        label: 'GitHub',
+        click(){
+          shell.openExternal("https://github.com/RiccardoZuninoJ/StockTaker")
+        }
+      },
+      {
+        label: 'Developer',
+        click(){
+          shell.openExternal("https://github.com/RiccardoZuninoJ")
+        }
+      }
+    ]
+  }
+]
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -12,7 +42,8 @@ function createWindow () {
     webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
-    }
+    },
+    menu: menu
   })
 
   // and load the index.html of the app.
@@ -49,11 +80,6 @@ ipcMain.on("connect", (event, data) => {
     mainWindow.loadFile("pages/connect.html")
 })
 
-ipcMain.on('connected', (event, data) => 
-  {
-    mainWindow.loadFile("pages/home.html")
-  }
-)
 
 ipcMain.on("remove", (event, data) => {
   let options  = {
@@ -69,6 +95,13 @@ ipcMain.on("remove", (event, data) => {
 })
 
 ipcMain.on("refresh", (event, data) => {
-  mainWindow.reload();
+  mainWindow.reload()
+})
 
+ipcMain.on("goto", (event, data) => {
+  mainWindow.loadFile('pages/'+data)
+})
+
+ipcMain.on("openlink", (event, data) => {
+  shell.openExternal(data)
 })

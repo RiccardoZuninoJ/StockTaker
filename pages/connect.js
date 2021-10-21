@@ -5,7 +5,14 @@ var nconf = require('nconf');
 
 form = document.getElementById('form')
 
+document.getElementById('opengithub').addEventListener("click", () => 
+    ipcRenderer.send("openlink", "https://github.com/RiccardoZuninoJ")
+)
 
+let goback = document.getElementById('goback')
+goback.addEventListener('click', () => {
+    ipcRenderer.send("goto", "index.html")
+})
 
 button.addEventListener('click', () => {
     let host = form.elements['host'].value
@@ -65,7 +72,7 @@ let toBeCreated
         alert("Database data saved successfully");
     })
 
-    ipcRenderer.send("connected", "")
+    ipcRenderer.send("goto", "home.html")
         }
       });
       
