@@ -1,7 +1,7 @@
 <div align="center">
     <img src="https://user-images.githubusercontent.com/86408279/138155928-626de270-f09c-4352-b456-5eb5d17b39b9.png" />
-    <img src="https://img.shields.io/badge/Release-v0.0.0-blue" />
-    <img src="https://img.shields.io/badge/Status-dev-orange" />
+    <img src="https://img.shields.io/badge/Release-v0.1-blue" />
+    <img src="https://img.shields.io/badge/Status-beta (prerelease)-orange" />
 </div>
 
 # StockTaker
