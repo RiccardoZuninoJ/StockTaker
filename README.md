@@ -6,6 +6,7 @@
 
 # StockTaker
 Electron based application for shop inventories
+Add, remove, manage your products simply and fast
 
 ## Downloading and running
 - Make sure to have NodeJS and npm fully working
